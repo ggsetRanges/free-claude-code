@@ -52,11 +52,34 @@ That's it — the proxy is now running in the background. You can close this ter
 
 ### Step 4: Launch Claude Code
 
+#### Option A: Terminal (CLI)
+
 ```bash
 ./claude-free
 ```
 
 You'll see a searchable list of every available model. Pick one and go. Just type a few letters to filter (e.g., type "kimi" to find Kimi K2.5 instantly).
+
+#### Option B: VSCode Extension
+
+If you use the [Claude Code VSCode extension](https://marketplace.visualstudio.com/items?itemName=anthropics.claude-code), you can point it at the proxy too:
+
+1. Open VSCode Settings (`Cmd + ,` on macOS, `Ctrl + ,` on Linux/Windows).
+2. Search for `claude-code.environmentVariables`.
+3. Click **Edit in settings.json** and add:
+
+```json
+"claude-code.environmentVariables": [
+  { "name": "ANTHROPIC_BASE_URL", "value": "http://localhost:8082" },
+  { "name": "ANTHROPIC_AUTH_TOKEN", "value": "freecc" }
+]
+```
+
+4. Reload the extension (or restart VSCode).
+
+That's it — the Claude Code panel in VSCode now uses NVIDIA NIM for free. To switch back to Anthropic, remove or comment out the block above and reload.
+
+> **Tip:** To use a specific model from VSCode, set the token to `freecc:model-id` (e.g., `"freecc:moonshotai/kimi-k2.5"`). Otherwise it uses the `MODEL` value from your `.env`.
 
 ---
 
