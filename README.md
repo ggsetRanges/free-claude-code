@@ -1,24 +1,21 @@
 <div align="center">
 
+# Free Claude Code
+
 Use **Claude Code CLI for free** with NVIDIA NIM's free API (unlimited usage, 40 requests/min). This lightweight proxy converts Claude Code's Anthropic API requests to NVIDIA NIM format. **Includes Telegram bot integration** for remote control from your phone!
 
 ### Use Claude Code CLI & VSCode — for free. No Anthropic API key required.
 
-[![GitHub Stars](https://img.shields.io/github/stars/Alishahryar1/free-claude-code?style=for-the-badge&logo=github)](https://github.com/Alishahryar1/free-claude-code/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/Alishahryar1/free-claude-code?style=for-the-badge&logo=github)](https://github.com/Alishahryar1/free-claude-code/network/members)
+> Based on [Alishahryar1/free-claude-code](https://github.com/Alishahryar1/free-claude-code). This fork adds simplified setup and easy custom model selection.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Python 3.14](https://img.shields.io/badge/python-3.14-3776ab.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
-
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json&style=for-the-badge)](https://github.com/astral-sh/uv)
-[![Tested with Pytest](https://img.shields.io/badge/testing-Pytest-00c0ff.svg?style=for-the-badge)](https://github.com/Alishahryar1/free-claude-code/actions/workflows/tests.yml)
-[![Type checking: Ty](https://img.shields.io/badge/type%20checking-ty-ffcc00.svg?style=for-the-badge)](https://pypi.org/project/ty/)
-[![Code style: Ruff](https://img.shields.io/badge/code%20formatting-ruff-f5a623.svg?style=for-the-badge)](https://github.com/astral-sh/ruff)
-[![Logging: Loguru](https://img.shields.io/badge/logging-loguru-4ecdc4.svg?style=for-the-badge)](https://github.com/Delgan/loguru)
 
 A lightweight proxy server that translates Claude Code's Anthropic API calls into **NVIDIA NIM**, **OpenRouter**, or **LM Studio** format.
 Get **40 free requests/min** on NVIDIA NIM, access **hundreds of models** on OpenRouter, or run **fully local** with LM Studio.
 
-[Features](#features) · [Quick Start](#quick-start) · [How It Works](#how-it-works) · [Providers](#providers) · [Discord Bot](#discord-bot) · [Configuration](#configuration)
+[Features](#features) · [Quick Start](#quick-start-5-minutes) · [How It Works](#how-it-works) · [Providers](#providers) · [Discord Bot](#discord-bot) · [Configuration](#configuration-reference)
 
 ---
 
@@ -65,6 +62,8 @@ You need these before starting:
 ### Step 2: Clone the repo and add your API key
 
 ```bash
+git clone https://github.com/rishiskhare/free-claude-code.git
+cd free-claude-code
 cp .env.example .env
 ```
 
@@ -75,6 +74,8 @@ NVIDIA_NIM_API_KEY=nvapi-paste-your-key-here
 ```
 
 Save the file. That's the only thing you need to edit.
+
+> **Want to use a different provider?** See [Providers](#providers) for OpenRouter (hundreds of models) or LM Studio (fully local).
 
 ### Step 3: Start the proxy server
 
@@ -131,6 +132,7 @@ If you use the [Claude Code VSCode extension](https://marketplace.visualstudio.c
 ```
 
 4. Reload the extension (or restart VSCode).
+5. **If you see the login screen** ("How do you want to log in?"): Click **Anthropic Console**, then authorize. The extension will start working. You may be redirected to buy credits in the browser — ignore that; the extension already works.
 
 That's it — the Claude Code panel in VSCode now uses NVIDIA NIM for free. To switch back to Anthropic, remove or comment out the block above and reload.
 
@@ -194,21 +196,50 @@ LM Studio runs locally — start the server in LM Studio's Developer tab or via 
 
 ### Popular Models
 
+<details>
+<summary><b>NVIDIA NIM</b></summary>
+
 | Model | ID | Notes |
 | --- | --- | --- |
 | Kimi K2.5 | `moonshotai/kimi-k2.5` | Great all-rounder |
 | Step 3.5 Flash | `stepfun-ai/step-3.5-flash` | Fast |
-| GLM 4.7 | `z-ai/glm4.7` | Strong reasoning |
+| GLM 5 | `z-ai/glm5` | Strong reasoning |
 | MiniMax M2.1 | `minimaxai/minimax-m2.1` | |
 | Devstral 2 | `mistralai/devstral-2-123b-instruct-2512` | Code-focused |
 
-The full list is in [`nvidia_nim_models.json`](nvidia_nim_models.json). Browse all NVIDIA NIM models at [build.nvidia.com](https://build.nvidia.com/explore/discover).
+Full list in [`nvidia_nim_models.json`](nvidia_nim_models.json). Browse at [build.nvidia.com](https://build.nvidia.com/explore/discover).
 
-To refresh the model list with the latest from NVIDIA:
+Update the model list: `curl "https://integrate.api.nvidia.com/v1/models" > nvidia_nim_models.json`
 
-```bash
-curl "https://integrate.api.nvidia.com/v1/models" > nvidia_nim_models.json
-```
+</details>
+
+<details>
+<summary><b>OpenRouter</b></summary>
+
+| Model | ID | Notes |
+| --- | --- | --- |
+| Step 3.5 Flash | `stepfun/step-3.5-flash:free` | Free |
+| DeepSeek R1 | `deepseek/deepseek-r1-0528:free` | Free, strong reasoning |
+| GPT OSS 120B | `openai/gpt-oss-120b:free` | Free |
+
+Browse all models at [openrouter.ai/models](https://openrouter.ai/models). Free models: [openrouter.ai/collections/free-models](https://openrouter.ai/collections/free-models).
+
+</details>
+
+<details>
+<summary><b>LM Studio</b></summary>
+
+Run models locally with [LM Studio](https://lmstudio.ai). Load a model in the Chat or Developer tab, then set `MODEL` to its identifier.
+
+| Model | ID |
+| --- | --- |
+| Qwen 2.5 7B | `lmstudio-community/qwen2.5-7b-instruct` |
+| Llama 3.1 8B | `lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF` |
+| Ministral 8B | `bartowski/Ministral-8B-Instruct-2410-GGUF` |
+
+Browse at [model.lmstudio.ai](https://model.lmstudio.ai).
+
+</details>
 
 ---
 
@@ -308,6 +339,9 @@ The only setting most users need is `NVIDIA_NIM_API_KEY` in `.env`. Everything e
 | `LM_STUDIO_BASE_URL` | LM Studio server URL | `http://localhost:1234/v1` |
 | `PROVIDER_RATE_LIMIT` | LLM API requests per window | `40` |
 | `PROVIDER_RATE_WINDOW` | Rate limit window (seconds) | `60` |
+| `HTTP_READ_TIMEOUT` | Read timeout for provider API requests (seconds) | `300` |
+| `HTTP_WRITE_TIMEOUT` | Write timeout for provider API requests (seconds) | `10` |
+| `HTTP_CONNECT_TIMEOUT` | Connect timeout for provider API requests (seconds) | `2` |
 | `CLAUDE_WORKSPACE` | Directory for agent workspace | `./agent_workspace` |
 | `ALLOWED_DIR` | Allowed directories for agent | `""` |
 | `MAX_CLI_SESSIONS` | Max concurrent CLI sessions | `10` |
@@ -316,12 +350,12 @@ The only setting most users need is `NVIDIA_NIM_API_KEY` in `.env`. Everything e
 | `ENABLE_TITLE_GENERATION_SKIP` | Skip title generation | `true` |
 | `ENABLE_SUGGESTION_MODE_SKIP` | Skip suggestion mode | `true` |
 | `ENABLE_FILEPATH_EXTRACTION_MOCK` | Enable filepath extraction mock | `true` |
-| `MESSAGING_PLATFORM` | Messaging platform: `discord` or `telegram` | `telegram` |
+| `MESSAGING_PLATFORM` | Messaging platform: `discord` or `telegram` | `discord` |
 | `DISCORD_BOT_TOKEN` | Discord Bot Token | `""` |
 | `ALLOWED_DISCORD_CHANNELS` | Comma-separated channel IDs (empty = none allowed) | `""` |
 | `TELEGRAM_BOT_TOKEN` | Telegram Bot Token | `""` |
 | `ALLOWED_TELEGRAM_USER_ID` | Allowed Telegram User ID | `""` |
-| `MESSAGING_RATE_LIMIT` | Messaging messages per window | `40` |
+| `MESSAGING_RATE_LIMIT` | Messaging messages per window | `1` |
 | `MESSAGING_RATE_WINDOW` | Messaging window (seconds) | `1` |
 
 The NVIDIA NIM base URL is fixed to `https://integrate.api.nvidia.com/v1`.
@@ -358,3 +392,51 @@ All `NVIDIA_NIM_*` settings are strictly validated; unknown keys with this prefi
 </details>
 
 See [`.env.example`](.env.example) for all supported parameters.
+
+---
+
+## Development
+
+### Project Structure
+
+```
+free-claude-code/
+├── server.py              # Entry point
+├── api/                   # FastAPI routes, request detection, optimization handlers
+├── providers/             # BaseProvider ABC + NVIDIA NIM, OpenRouter, LM Studio
+├── messaging/             # MessagingPlatform ABC + Discord/Telegram bots, session management
+├── config/                # Settings, NIM config, logging
+├── cli/                   # CLI session and process management
+├── utils/                 # Text utilities
+└── tests/                 # Pytest test suite
+```
+
+### Commands
+
+```bash
+uv run pytest          # Run tests
+uv run ty check        # Type checking
+uv run ruff check      # Code style checking
+uv run ruff format     # Code formatting
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! Report bugs or suggest features via [Issues](https://github.com/rishiskhare/free-claude-code/issues).
+
+```bash
+git checkout -b my-feature
+# Make your changes
+uv run pytest && uv run ty check && uv run ruff check && uv run ruff format --check
+# Open a pull request
+```
+
+---
+
+## License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+Original project by [Alishahryar1](https://github.com/Alishahryar1/free-claude-code). Built with [FastAPI](https://fastapi.tiangolo.com/), [OpenAI Python SDK](https://github.com/openai/openai-python), [discord.py](https://github.com/Rapptz/discord.py), and [python-telegram-bot](https://python-telegram-bot.org/).
