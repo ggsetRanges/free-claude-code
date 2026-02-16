@@ -71,21 +71,21 @@ jobs:
             fi
           fi
 
-      
 
-- name: Auto-fix formatting
-  if: steps.check.outputs.status == 'behind'
-  run: |
-    # Install uv and run formatter to fix any formatting issues from merge
-    pip install uv
-    uv run ruff format || true
-    uv run ruff check --fix || true
-    # Commit formatting fixes if any
-    if [ -n "$(git status --porcelain)" ]; then
-      git add -A
-      git commit -m "style: auto-fix formatting after upstream sync [skip ci]" || true
-    fi
-- name: Pull latest before push (avoid non-fast-forward)
+      - name: Auto-fix formatting
+        if: steps.check.outputs.status == 'behind'
+        run: |
+          # Install uv and run formatter to fix any formatting issues from merge
+          pip install uv
+          uv run ruff format || true
+          uv run ruff check --fix || true
+          # Commit formatting fixes if any
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "style: auto-fix formatting after upstream sync [skip ci]" || true
+          fi
+
+      - name: Pull latest before push (avoid non-fast-forward)
         if: steps.check.outputs.status == 'behind'
         run: |
           git fetch origin "${{ env.FORK_BRANCH }}"
