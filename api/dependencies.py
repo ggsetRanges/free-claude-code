@@ -2,6 +2,7 @@
 
 from typing import Optional
 
+from fastapi import HTTPException
 from loguru import logger
 
 from config.settings import Settings, get_settings as _get_settings, NVIDIA_NIM_BASE_URL
@@ -24,6 +25,17 @@ def get_provider() -> BaseProvider:
         settings = get_settings()
 
         if settings.provider_type == "nvidia_nim":
+            if (
+                not settings.nvidia_nim_api_key
+                or not settings.nvidia_nim_api_key.strip()
+            ):
+                raise HTTPException(
+                    status_code=503,
+                    detail=(
+                        "NVIDIA_NIM_API_KEY is not set. Add it to your .env file. "
+                        "Get a key at https://build.nvidia.com/settings/api-keys"
+                    ),
+                )
             from providers.nvidia_nim import NvidiaNimProvider
 
             config = ProviderConfig(
@@ -31,14 +43,24 @@ def get_provider() -> BaseProvider:
                 base_url=NVIDIA_NIM_BASE_URL,
                 rate_limit=settings.provider_rate_limit,
                 rate_window=settings.provider_rate_window,
-                nim_settings=settings.nim,
                 http_read_timeout=settings.http_read_timeout,
                 http_write_timeout=settings.http_write_timeout,
                 http_connect_timeout=settings.http_connect_timeout,
             )
-            _provider = NvidiaNimProvider(config)
+            _provider = NvidiaNimProvider(config, nim_settings=settings.nim)
             logger.info("Provider initialized: %s", settings.provider_type)
         elif settings.provider_type == "open_router":
+            if (
+                not settings.open_router_api_key
+                or not settings.open_router_api_key.strip()
+            ):
+                raise HTTPException(
+                    status_code=503,
+                    detail=(
+                        "OPENROUTER_API_KEY is not set. Add it to your .env file. "
+                        "Get a key at https://openrouter.ai/keys"
+                    ),
+                )
             from providers.open_router import OpenRouterProvider
 
             config = ProviderConfig(
@@ -46,7 +68,6 @@ def get_provider() -> BaseProvider:
                 base_url="https://openrouter.ai/api/v1",
                 rate_limit=settings.provider_rate_limit,
                 rate_window=settings.provider_rate_window,
-                nim_settings=settings.nim,
                 http_read_timeout=settings.http_read_timeout,
                 http_write_timeout=settings.http_write_timeout,
                 http_connect_timeout=settings.http_connect_timeout,
@@ -61,7 +82,6 @@ def get_provider() -> BaseProvider:
                 base_url=settings.lm_studio_base_url,
                 rate_limit=settings.provider_rate_limit,
                 rate_window=settings.provider_rate_window,
-                nim_settings=settings.nim,
                 http_read_timeout=settings.http_read_timeout,
                 http_write_timeout=settings.http_write_timeout,
                 http_connect_timeout=settings.http_connect_timeout,

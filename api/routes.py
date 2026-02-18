@@ -121,7 +121,7 @@ async def root(settings: Settings = Depends(get_settings)):
     """Root endpoint."""
     return {
         "status": "ok",
-        "provider": "nvidia_nim",
+        "provider": settings.provider_type,
         "model": settings.model,
     }
 

@@ -1,12 +1,11 @@
 __pycache__
 .claude
+.cursor
 .pytest_cache
 .ruff_cache
 .serena
 .venv
 agent_workspace
 .env
-AGENTS.md
-CLAUDE.md
 server.log
 .coverage

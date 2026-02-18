@@ -29,13 +29,12 @@ def provider_config():
         base_url="https://test.api.nvidia.com/v1",
         rate_limit=10,
         rate_window=60,
-        nim_settings=NimSettings(),
     )
 
 
 @pytest.fixture
 def nim_provider(provider_config):
-    return NvidiaNimProvider(provider_config)
+    return NvidiaNimProvider(provider_config, nim_settings=NimSettings())
 
 
 @pytest.fixture
@@ -54,7 +53,6 @@ def lmstudio_provider(provider_config):
         base_url="http://localhost:1234/v1",
         rate_limit=provider_config.rate_limit,
         rate_window=provider_config.rate_window,
-        nim_settings=provider_config.nim_settings,
     )
     return LMStudioProvider(lmstudio_config)
 
@@ -125,6 +123,7 @@ def incoming_message_factory():
             "username",
             "timestamp",
             "raw_event",
+            "status_message_id",
         }
     )
 
