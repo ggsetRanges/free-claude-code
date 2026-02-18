@@ -158,7 +158,9 @@ def main() -> None:
 
     updated = ensure_top_note(upstream_readme, TOP_NOTE)
     updated = replace_section(updated, r"##\s+Quick Start.*", QUICK_START_SECTION)
-    updated = replace_section(updated, r"##\s+Model-Specific Aliases.*", MODEL_ALIASES_SECTION)
+    updated = replace_section(
+        updated, r"##\s+Model-Specific Aliases.*", MODEL_ALIASES_SECTION
+    )
 
     (ROOT / "README.md").write_text(updated.rstrip() + "\n", encoding="utf-8")
 
