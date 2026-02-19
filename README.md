@@ -44,9 +44,48 @@ Get **40 free requests/min** on NVIDIA NIM, access **hundreds of models** on Ope
 | **Subagent Control** | Task tool interception forces `run_in_background=False` — no runaway subagents |
 | **Extensible** | Clean `BaseProvider` and `MessagingPlatform` ABCs — add new providers or platforms easily |
 
-## Quick Start (5 minutes)
+## Quick Start
 
-### Step 1: Install the prerequisites
+### 🚀 Automated Setup (Windows - Recommended)
+
+**The easiest way to get started on Windows:**
+
+1. **Download the repository**
+   ```bash
+   git clone https://github.com/rishiskhare/free-claude-code.git
+   cd free-claude-code
+   ```
+
+2. **Run the setup wizard**
+   - Double-click `INSTALL.bat`, or
+   - Run in PowerShell: `.\setup\Setup-Wizard.ps1`
+
+3. **Follow the interactive wizard**
+   - The wizard will automatically install all prerequisites (Python, Node.js, uv, PM2, fzf)
+   - Select your AI provider (NVIDIA NIM, OpenRouter, or LM Studio)
+   - Enter your API key (get free NVIDIA key at [build.nvidia.com/settings/api-keys](https://build.nvidia.com/settings/api-keys))
+   - Choose your preferred model
+   - Configure optional features (Discord/Telegram bots, voice transcription)
+
+4. **Done!** The server starts automatically and runs in the background.
+
+**What the wizard does:**
+- ✅ Installs all prerequisites automatically
+- ✅ Creates Python virtual environment
+- ✅ Generates `.env` configuration
+- ✅ Sets up PM2 background service
+- ✅ Creates desktop shortcuts
+- ✅ Validates installation
+
+**Troubleshooting?** See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed help.
+
+---
+
+### 📋 Manual Setup (All Platforms)
+
+If you prefer manual installation or are on Mac/Linux:
+
+#### Step 1: Install the prerequisites
 
 You need these before starting:
 
@@ -59,7 +98,7 @@ You need these before starting:
 | fzf (fuzzy model picker) | [github.com/junegunn/fzf](https://github.com/junegunn/fzf) |
 
 
-### Step 2: Clone the repo and add your API key
+#### Step 2: Clone the repo and add your API key
 
 ```bash
 git clone https://github.com/rishiskhare/free-claude-code.git
@@ -77,7 +116,7 @@ You only need to change that one key to get started.
 
 > **Want to use a different provider?** See [Providers](#providers) for OpenRouter (hundreds of models) or LM Studio (fully local).
 
-### Step 3: Start the proxy server
+#### Step 3: Start the proxy server
 
 ```bash
 pm2 start "uv run uvicorn server:app --host 0.0.0.0 --port 8082" --name "claude-proxy"
@@ -92,7 +131,7 @@ That's it - the proxy is now running in the background. You can close this termi
 | `pm2 restart claude-proxy` | Restart it (e.g., after editing `.env`) |
 | `pm2 list` | Check if the proxy is running |
 
-### Step 4: Launch Claude Code
+#### Step 4: Launch Claude Code
 
 #### Option A: Terminal (CLI)
 
