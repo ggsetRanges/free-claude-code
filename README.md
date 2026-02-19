@@ -56,9 +56,9 @@ Get **40 free requests/min** on NVIDIA NIM, access **hundreds of models** on Ope
    cd free-claude-code
    ```
 
-2. **Run the setup wizard**
-   - Double-click `INSTALL.bat`, or
-   - Run in PowerShell: `.\setup\Setup-Wizard.ps1`
+2. **Run the one-click installer**
+   - **Double-click `SETUP.bat`** ← That's it!
+   - Or run in PowerShell: `.\setup\Setup-Wizard.ps1`
 
 3. **Follow the interactive wizard**
    - The wizard will automatically install all prerequisites (Python, Node.js, uv, PM2, fzf)
